@@ -1,0 +1,23 @@
+apiVersion: sources.triggermesh.io/v1alpha1
+kind: IBMMQSource
+metadata:
+  name: ibm-mq-sales-demo
+spec:
+  connectionName: ibm-mq.personal-org-47-personal-ns-39.svc.cluster.local(1414)
+  queueManager: QM1
+  queueName: DEV.QUEUE.1
+  channelName: DEV.APP.SVRCONN
+  credentials:
+    username:
+      valueFromSecret:
+        name: ibm-mq-secret
+        key: username
+    password:
+      valueFromSecret:
+        name: ibm-mq-secret
+        key: password
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: gtflp
